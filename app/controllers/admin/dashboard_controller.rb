@@ -1,4 +1,5 @@
 class Admin::DashboardController < ApplicationController
+  layout "admin"
   before_action :authenticate_user!
   before_action :authorize_admin
   def index
