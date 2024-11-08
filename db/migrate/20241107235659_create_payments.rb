@@ -5,8 +5,6 @@ class CreatePayments < ActiveRecord::Migration[7.2]
       t.decimal :amount
       t.string :payment_method
       t.string :status
-      t.datetime :created_at
-      t.datetime :updated_at
 
       t.timestamps
     end

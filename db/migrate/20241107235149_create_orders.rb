@@ -5,8 +5,6 @@ class CreateOrders < ActiveRecord::Migration[7.2]
       t.decimal :total_amount
       t.string :status
       t.integer :shipping_address_id
-      t.datetime :created_at
-      t.datetime :updated_at
 
       t.timestamps
     end
