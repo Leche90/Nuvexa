@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  layout "frontend"
   def index
   end
 

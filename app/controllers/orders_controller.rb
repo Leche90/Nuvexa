@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  layout "frontend"
   def new
   end
 

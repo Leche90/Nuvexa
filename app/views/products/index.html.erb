@@ -1,2 +1,38 @@
-<h1>Products#index</h1>
-<p>Find me in app/views/products/index.html.erb</p>
+<div class="container my-5">
+  <h1 class="text-center mb-4">Our Products</h1>
+  
+  <!-- Product Grid -->
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <!-- Product Image -->
+          <% if product.image.attached? %>
+            <%= image_tag product.image, class: "card-img-top", alt: product.name %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-img-top", alt: "Placeholder" %>
+          <% end %>
+
+          <!-- Product Details -->
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text">
+              <%= truncate(product.description, length: 100) %>
+            </p>
+            <h6 class="text-primary">$<%= number_to_currency(product.price, unit: "") %></h6>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="card-footer bg-transparent border-0">
+            <a href="<%= product_path(product) %>" class="btn btn-primary btn-sm w-100">View Details</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination justify-content-center mt-4">
+    <%= paginate @products %>
+  </div>
+</div>
