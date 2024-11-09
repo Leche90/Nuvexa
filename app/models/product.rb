@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   has_many :product_pricing_histories
 
   validates :name, presence: true
-  validates :description, presence: true
+  validates :description, presence: false
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :image, presence: true
+  validates :image, presence: false
 end
