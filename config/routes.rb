@@ -1,16 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  get "orders/new"
-  get "orders/create"
-  get "orders/show"
-  get "cart/index"
-  get "categories/index"
-  get "categories/show"
-  get "products/index"
-  get "products/show"
-  get "home/index"
-   # Admin routes
-   namespace :admin do
+
+  # Admin routes
+  namespace :admin do
     root "dashboard#index" # Admin dashboard
     resources :products, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :orders, only: [ :index, :show, :edit, :update ]

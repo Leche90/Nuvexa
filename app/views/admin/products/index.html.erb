@@ -10,6 +10,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Price</th>
+       <th>Categories</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -19,11 +20,10 @@
         <td><%= product.name %></td>
         <td><%= truncate(product.description, length: 50) %></td>
         <td><%= number_to_currency(product.price) %></td>
+        <td><%= product.categories.map(&:name).join(", ") %></td>
         <td>
           <%= link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-warning btn-sm' %> |
-       <%= link_to 'Destroy', admin_product_path(product), data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
-
-
+          <%= link_to 'Destroy', admin_product_path(product), data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
         </td>
       </tr>
     <% end %>
