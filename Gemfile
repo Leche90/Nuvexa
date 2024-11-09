@@ -29,6 +29,8 @@ gem "faker"
 gem "devise"
 gem "sassc-rails"
 gem "http-cookie"
+gem "kaminari"
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
