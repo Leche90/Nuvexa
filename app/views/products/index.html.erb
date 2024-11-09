@@ -1,5 +1,10 @@
 <div class="container my-5">
-  
+  <!-- Filter Options -->
+<div class="mb-3">
+  <%= link_to 'New Products', products_path(filter: 'new'), class: "btn btn-primary" %>
+  <%= link_to 'Recently Updated', products_path(filter: 'recently_updated'), class: "btn btn-primary" %>
+  <%= link_to 'All Products', products_path, class: "btn btn-secondary" %> <!-- Reset filter -->
+</div>
   <!-- Product Grid -->
   <div class="row">
     <% @products.each do |product| %>

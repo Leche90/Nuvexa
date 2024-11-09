@@ -1,6 +1,14 @@
 class ProductsController < ApplicationController
   layout "frontend"
   def index
+    @products = Product.all
+
+    if params[:filter] == "new"
+      @products = @products.new_products
+    elsif params[:filter] == "recently_updated"
+      @products = @products.recently_updated
+    end
+
     @products = Product.order(created_at: :desc).page(params[:page]).per(10)
   end
 
