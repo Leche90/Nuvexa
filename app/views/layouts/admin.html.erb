@@ -27,8 +27,8 @@
                 <%= current_user.email %> <!-- Display current user email -->
               </button>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="#">User Info</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <%# <li><a class="dropdown-item" href="#">User Info</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li> %>
                 <li>
                   <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %> <!-- Logout Link -->
                 </li>

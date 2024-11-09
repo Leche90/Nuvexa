@@ -19,8 +19,19 @@
   </head>
 
   <body>
-        <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
+   <!-- Notice Message -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Alert Message -->
+  <% if alert %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= alert %>
+    </div>
+  <% end %>
     <%= yield %>
   </body>
   

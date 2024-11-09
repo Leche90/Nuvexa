@@ -12,7 +12,7 @@ Rails.application.routes.draw do
    # Admin routes
    namespace :admin do
     root "dashboard#index" # Admin dashboard
-    resources :products
+    resources :products, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :orders, only: [ :index, :show, :edit, :update ]
     resources :users, only: [ :index ]
     resources :categories
