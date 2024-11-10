@@ -5,11 +5,17 @@ class Product < ApplicationRecord
   has_many :order_items
   has_many :product_pricing_histories
 
-   # Scope for products added within the last 3 days (new products)
-   scope :new_products, -> { where("created_at >= ?", 3.days.ago) }
+  scope :new_products, -> { where("created_at >= ?", 3.days.ago) }
+  scope :recently_updated, -> { where("updated_at >= ?", 3.days.ago) }
 
-   # Scope for products updated within the last 3 days (recently updated)
-   scope :recently_updated, -> { where("updated_at >= ?", 3.days.ago) }
+  belongs_to :category
+
+  # Search method
+  def self.search_by_keyword_and_category(keyword, category_id = nil)
+    products = where("name LIKE ? OR description LIKE ?", "%#{keyword}%", "%#{keyword}%")
+    products = products.where(category_id: category_id) if category_id.present?
+    products
+  end
 
   validates :name, presence: true
   validates :description, presence: false
