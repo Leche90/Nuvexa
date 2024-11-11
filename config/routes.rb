@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Admin routes
   namespace :admin do
-    root "dashboard#index" # Admin dashboard
+    root "dashboard#index"
     resources :products, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :orders, only: [ :index, :show, :edit, :update ]
     resources :users, only: [ :index ]
@@ -11,22 +11,18 @@ Rails.application.routes.draw do
   end
 
   # Frontend routes
-  root "home#index" # Main store page
+  root "home#index"
   resources :products, only: [ :index, :show ]
   resources :categories, only: [ :index, :show ]
-  resources :cart, only: [ :index, :create, :update, :destroy ]
   resources :orders, only: [ :new, :create, :show ]
+  resources :cart, only: [ :index ] do
+    post "add", on: :collection  # This creates the `add_cart_index_path`
+    patch "update_quantity", on: :collection
+    delete "remove", on: :collection
+  end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check route and PWA files
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

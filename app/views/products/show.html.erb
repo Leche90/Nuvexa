@@ -15,20 +15,23 @@
     </div>
 
     <!-- Product Details -->
-    <div class="col-md-6">
-      <h1 class="display-4"><%= @product.name %></h1>
-      <h4 class="text-primary">$<%= number_to_currency(@product.price, unit: "") %></h4>
-      
-      <div class="my-4">
-        <p class="lead"><%= @product.description %></p>
-      </div>
+<div class="col-md-6">
+  <h1 class="display-4"><%= @product.name %></h1>
+  <h4 class="text-primary">$<%= number_to_currency(@product.price, unit: "") %></h4>
+  
+  <div class="my-4">
+    <p class="lead"><%= @product.description %></p>
+  </div>
 
-
-      <!-- Purchase Button -->
-      <div class="mt-4">
-        <button class="btn btn-primary btn-lg">Add to Cart</button>
-      </div>
-    </div>
+  <!-- Add to Cart Form -->
+ <div class="mt-4">
+  <%= form_with url: add_cart_index_path, method: :post, local: true do |form| %>
+    <%= form.hidden_field :product_id, value: @product.id %>
+    <%= form.number_field :quantity, value: 1, min: 1, class: "form-control d-inline-block w-auto mr-2" %>
+    <%= form.submit "Add to Cart", class: "btn btn-primary btn-lg" %>
+  <% end %>
+</div>
+</div>
   </div>
   
   <!-- Related Products Section -->
