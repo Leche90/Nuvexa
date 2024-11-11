@@ -25,7 +25,10 @@
             <% end %>
           </td>
           <td>
-            <%= link_to "Remove", remove_cart_index_path(product_id: cart_item[:product].id), method: :delete, class: "btn btn-danger" %>
+            <%= link_to "Remove", remove_cart_index_path(product_id: cart_item[:product].id), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  }, class: "btn btn-danger" %>
           </td>
         </tr>
       <% end %>

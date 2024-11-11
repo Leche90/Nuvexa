@@ -45,7 +45,7 @@ class CartController < ApplicationController
 
   def remove
     product_id = params[:product_id].to_i
-    @cart.delete(product_id)
+    @cart.delete(product_id.to_s)
 
     save_cart
     redirect_to cart_index_path, notice: "Item removed from cart."
