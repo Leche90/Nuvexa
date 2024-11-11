@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # devise_for :users
+  # Admin routes
+  devise_for :users, path: "admin", controllers: {
+    sessions: "admin/sessions"
+  }, as: "admin"
+
+  # Frontend routes
+  devise_for :users, path: "frontend", controllers: {
+    sessions: "frontend/sessions"
+  }, as: "frontend"
+
 
   # Admin routes
   namespace :admin do

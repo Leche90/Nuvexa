@@ -1,5 +1,5 @@
 class Admin::ProductsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_admin_user!
   before_action :set_product, only: %i[edit update destroy]
   layout "admin"
 

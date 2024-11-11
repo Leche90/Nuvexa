@@ -8,10 +8,10 @@ class User < ApplicationRecord
 
   # Role-based methods
   def admin?
-    role == 'admin'
+    role == "admin"
   end
 
   def customer?
-    role == 'customer'
+    role == "customer"
   end
 end

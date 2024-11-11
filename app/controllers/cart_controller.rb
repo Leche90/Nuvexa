@@ -1,5 +1,6 @@
 class CartController < ApplicationController
   layout "frontend"
+  before_action :authenticate_frontend_user!, only: [ :index, :add, :update_quantity, :remove ] # restrict access only to cart actions
   before_action :initialize_cart
 
   def index
