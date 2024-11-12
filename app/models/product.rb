@@ -5,8 +5,8 @@ class Product < ApplicationRecord
   has_many :order_items
   has_many :product_pricing_histories
 
-  scope :new_products, -> { where("created_at >= ?", 3.days.ago) }
-  scope :recently_updated, -> { where("updated_at >= ?", 3.days.ago) }
+  scope :new_products, -> { where("created_at >= ?", 3.days.ago).order(created_at: :desc) }
+  scope :recently_updated, -> { where("updated_at >= ?", 3.days.ago).order(updated_at: :desc) }
 
   # Remove the below line since a product can have many categories
   # belongs_to :category
@@ -19,7 +19,7 @@ class Product < ApplicationRecord
   end
 
   validates :name, presence: true
-  validates :description, presence: true
+  validates :description, presence: false
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :image, presence: true
 end

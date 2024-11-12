@@ -13,11 +13,11 @@ class Admin::ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    Rails.logger.debug "Product params: #{product_params}"
+    # Rails.logger.debug "Product params: #{product_params}"
     if @product.save
       redirect_to admin_products_path, notice: "Product was successfully created."
     else
-      Rails.logger.debug "Product errors: #{@product.errors.full_messages}"
+      # Rails.logger.debug "Product errors: #{@product.errors.full_messages}"
       render :new
     end
   end
@@ -26,12 +26,17 @@ class Admin::ProductsController < ApplicationController
   end
 
   def update
+    Rails.logger.debug "Product params: #{product_params}"
+
     if @product.update(product_params)
+      Rails.logger.debug "Product was successfully updated: #{@product.inspect}"
       redirect_to admin_products_path, notice: "Product was successfully updated."
     else
+      Rails.logger.debug "Product update failed: #{@product.errors.full_messages}"
       render :edit
     end
   end
+
 
   def destroy
     @product = Product.find(params[:id])
