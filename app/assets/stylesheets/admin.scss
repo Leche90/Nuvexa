@@ -29,6 +29,12 @@
     overflow-y: auto;
   }
 
+  #existing-image-container{
+    img{
+      max-width: 200px;
+    }
+  }
+
   footer{
     height: 40px;
     p{

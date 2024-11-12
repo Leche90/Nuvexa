@@ -13,9 +13,11 @@ class Admin::ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+    Rails.logger.debug "Product params: #{product_params}"
     if @product.save
       redirect_to admin_products_path, notice: "Product was successfully created."
     else
+      Rails.logger.debug "Product errors: #{@product.errors.full_messages}"
       render :new
     end
   end
@@ -44,6 +46,13 @@ class Admin::ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock_quantity, :image, category_ids: [])  # Added :image here
+    params.require(:product).permit(:name, :description, :price, :stock_quantity, :image, category_ids: [])
+          .tap do |whitelisted|
+            # Remove any blank category_ids
+            whitelisted[:category_ids].reject!(&:blank?)
+
+            # Optionally, ensure only valid category IDs are included
+            whitelisted[:category_ids].select! { |id| Category.exists?(id) }
+          end
   end
 end

@@ -8,7 +8,8 @@ class Product < ApplicationRecord
   scope :new_products, -> { where("created_at >= ?", 3.days.ago) }
   scope :recently_updated, -> { where("updated_at >= ?", 3.days.ago) }
 
-  belongs_to :category
+  # Remove the below line since a product can have many categories
+  # belongs_to :category
 
   # Search method
   def self.search_by_keyword_and_category(keyword, category_id = nil)
@@ -18,7 +19,7 @@ class Product < ApplicationRecord
   end
 
   validates :name, presence: true
-  validates :description, presence: false
+  validates :description, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :image, presence: false
+  validates :image, presence: true
 end
