@@ -5,7 +5,7 @@ class Frontend::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    sign_out :user
+    sign_out :frontend_user
     redirect_to new_frontend_user_session_path
   end
 

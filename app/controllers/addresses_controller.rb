@@ -6,18 +6,15 @@ class AddressesController < ApplicationController
 
   def new
     @address = @user.build_address # Initializes a new address for the user
-    @provinces = Province.all  # Assuming you have a Province model
+    # @provinces = Province.all
   end
 
   def create
     @address = @user.build_address(address_params)
-
-    @user.update(province_id: @address.province_id)
-    # Ensure the province is assigned
-    @address.province = Province.find_by(id: address_params[:province_id])
+    @user.update(province_id: @address.province_id) # Ensure the province is assigned to the user
 
     if @address.save
-      redirect_to user_address_path(@user), notice: "Address successfully created."
+      redirect_to products_path, notice: "Address successfully created."
     else
       @provinces = Province.all  # Re-fetch provinces in case of form errors
       render :new
@@ -38,7 +35,6 @@ class AddressesController < ApplicationController
     end
   end
 
-
   private
 
   def set_user
@@ -50,7 +46,7 @@ class AddressesController < ApplicationController
   end
 
   def set_address
-    @address = @user.address || Address.find(params[:id])
+    @address = @user.address || Address.find_by(id: params[:id]) # Use find_by to avoid errors if address not found
   end
 
   def address_params

@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # has_secure_password
   has_many :orders
   has_one :address, dependent: :destroy
-  belongs_to :province
+  belongs_to :province, optional: true
 
   # Role-based methods
   def admin?
