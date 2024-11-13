@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   # has_secure_password
   has_many :orders
+  has_one :address, dependent: :destroy
+  belongs_to :province
 
   # Role-based methods
   def admin?

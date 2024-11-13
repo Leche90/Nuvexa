@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
       root_path        # Redirect to homepage
     end
   end
+
+   # After user signs up, redirect to address creation page
+   def after_sign_up_path_for(resource)
+    new_address_path  # Redirect to the address creation page
+   end
 end

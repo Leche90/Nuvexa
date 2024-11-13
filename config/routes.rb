@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "addresses/new"
+  get "addresses/create"
   # devise_for :users
   # Admin routes
   devise_for :users, path: "admin", controllers: {
@@ -29,6 +31,10 @@ Rails.application.routes.draw do
     post "add", on: :collection  # This creates the `add_cart_index_path`
     patch "update_quantity", on: :collection
     delete "remove", on: :collection
+  end
+
+  resources :users, only: [] do
+    resource :address, only: [ :new, :create, :edit, :update ] # Address belongs to user, edit and update actions
   end
 
   # Health check route and PWA files

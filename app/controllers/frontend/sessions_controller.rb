@@ -6,10 +6,10 @@ class Frontend::SessionsController < Devise::SessionsController
 
   def destroy
     sign_out :user
-    redirect_to new_user_session_path
+    redirect_to new_frontend_user_session_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path # Redirect to frontend login page after sign out
+    new_frontend_user_session_path # Redirect to frontend login page after sign out
   end
 end
