@@ -1,3 +1,4 @@
+# CheckoutsController
 class CheckoutsController < ApplicationController
   before_action :authenticate_frontend_user!
   before_action :set_user
@@ -39,9 +40,9 @@ class CheckoutsController < ApplicationController
     calculate_totals
 
     # Manually assign totals and address to the order
-    @order = @user.orders.build
-    @order.total_price = @total_price
-    @order.total_tax = @total_tax
+    @order = @user.orders.build(total_price: @total_price, total_tax: @total_tax,
+    gst: @gst, pst: @pst, hst: @hst)
+
     associate_or_build_address(@order)
     build_order_items(@order)
 
@@ -57,7 +58,6 @@ class CheckoutsController < ApplicationController
       render :index
     end
   end
-
 
   private
 
@@ -98,7 +98,7 @@ class CheckoutsController < ApplicationController
 
   # Strong params for address
   def address_params
-    params.require(:address).permit(:address_line1, :address_line2, :city, :province_id, :postal_code, :country)
+    params.fetch(:address, {}).permit(:address_line1, :address_line2, :city, :province_id, :postal_code, :country)
   end
 
   # Associate or build the address for the order
@@ -109,13 +109,15 @@ class CheckoutsController < ApplicationController
       order.address_id = @user.address.id
       Rails.logger.debug "Order associated with existing address: #{order.address.attributes}"
     else
-      # Build a new address if none exists
-      new_address = order.build_address(address_params)
-      if new_address.valid?
-        new_address.save # Save the address to get an id
-        order.address_id = new_address.id # Explicitly set address_id
-      end
-      Rails.logger.debug "Order has new address: #{order.address.attributes}"
+      # Build a new address if none exists and validate
+      # new_address = order.build_address(address_params)
+      # if new_address.valid?
+      #   new_address.save # Save to assign id
+      #   order.address_id = new_address.id
+      # else
+      #   Rails.logger.debug "Address validation failed: #{new_address.errors.full_messages.join(', ')}"
+      # end
+      # Rails.logger.debug "Order has new address: #{order.address.attributes}"
     end
   end
 

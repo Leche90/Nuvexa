@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_14_182817) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_14_190656) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,6 +82,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_182817) do
     t.bigint "address_id", null: false
     t.decimal "total_price", precision: 10, scale: 3
     t.decimal "total_tax", precision: 10, scale: 3
+    t.decimal "gst", precision: 10, scale: 3
+    t.decimal "pst", precision: 10, scale: 3
+    t.decimal "hst", precision: 10, scale: 3
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
