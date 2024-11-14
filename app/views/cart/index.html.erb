@@ -41,4 +41,7 @@
 <% end %>
 
 <%= link_to "Continue Shopping", products_path, class: "btn btn-primary" %>
-<%= link_to "Checkout", checkouts_path, class: "btn btn-success" %>
+
+<% unless @cart_items.empty? %>
+  <%= link_to "Checkout", checkouts_path, class: "btn btn-success" %>
+<% end %>
