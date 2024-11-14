@@ -37,6 +37,13 @@ Rails.application.routes.draw do
     resource :address, only: [ :new, :create, :edit, :update ] # Address belongs to user, edit and update actions
   end
 
+  resources :checkouts, only: [ :index, :create ] do
+    member do
+      get :invoice
+    end
+  end
+
+
   # Health check route and PWA files
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

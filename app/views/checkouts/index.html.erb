@@ -1,0 +1,46 @@
+<h1>Checkout</h1>
+
+<% if @cart_items.empty? %>
+  <p>Your cart is empty.</p>
+<% else %>
+  <h3>Cart Items</h3>
+  <ul>
+    <% @cart_items.each do |cart_item| %>
+      <li>
+        <%= cart_item[:product].name %> - <%= cart_item[:quantity] %> x <%= number_to_currency(cart_item[:product].price) %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h3>Shipping Information</h3>
+  <%= form_with model: @order, url: checkouts_path, local: true do |form| %>
+    <div>
+      <%= form.label :address_line1, "Address Line 1" %>
+      <%= form.text_field :address_line1, value: @order.address&.address_line1 %>
+    </div>
+    <div>
+      <%= form.label :address_line2, "Address Line 2" %>
+      <%= form.text_field :address_line2, value: @order.address&.address_line2 %>
+    </div>
+    <div>
+      <%= form.label :city %>
+      <%= form.text_field :city, value: @order.address&.city %>
+    </div>
+    <div>
+      <%= form.label :province_id %>
+      <%= form.collection_select :province_id, @provinces, :id, :name, prompt: "Select Province", selected: @order.address&.province_id %>
+    </div>
+    <div>
+      <%= form.label :postal_code %>
+      <%= form.text_field :postal_code, value: @order.address&.postal_code %>
+    </div>
+    <div>
+      <%= form.label :country %>
+      <%= form.text_field :country, value: @order.address&.country %>
+    </div>
+
+    <h3>Total Price: <%= number_to_currency(@total_price) %></h3>
+
+    <%= form.submit "Place Order", class: "btn btn-success" %>
+  <% end %>
+<% end %>
