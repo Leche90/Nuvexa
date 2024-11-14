@@ -7,6 +7,7 @@ class CheckoutsController < ApplicationController
 
   def index
     Rails.logger.debug "User ID: #{@user.id}"
+
     if @user.address
       Rails.logger.debug "User's Address: #{@user.address.attributes}"
     else
@@ -14,32 +15,11 @@ class CheckoutsController < ApplicationController
     end
 
     @order = @user.orders.build
-
-    # Log the new order object before we start associating it
-    Rails.logger.debug "New Order before associations: #{@order.attributes}"
-
-    if @user.address
-      # Associate the order with the user's existing address via the address association
-      @order.address = @user.address
-      Rails.logger.debug "Order associated with existing address: #{@order.address.attributes}"
-    else
-      # If no address exists for the user, create a new address object
-      @order.build_address
-      Rails.logger.debug "Order has new empty address: #{@order.address.attributes}"
-    end
-
-    # Log the final order object after building or associating the address
-    Rails.logger.debug "Order after address association: #{@order.attributes}"
-
+    associate_or_build_address(@order)
     calculate_totals
+
+    Rails.logger.debug "Order after address association: #{@order.attributes}"
   end
-
-
-
-
-
-
-
 
   def create
     if @cart_items.empty?
@@ -53,22 +33,21 @@ class CheckoutsController < ApplicationController
       return
     end
 
-    # Pass address attributes correctly when creating the order
-    @order = @user.orders.build(total_price: @total_price, total_tax: @total_tax, address_attributes: address_params)
+    @order = @user.orders.build(total_price: @total_price, total_tax: @total_tax)
+    associate_or_build_address(@order)
+    build_order_items(@order)
 
-    @cart_items.each do |item|
-      @order.order_items.build(product: item[:product], quantity: item[:quantity], price: item[:product].price)
-    end
+    Rails.logger.debug "Order before saving: #{@order.attributes}"
 
     if @order.save
       session[:cart] = {}
       redirect_to order_path(@order), notice: "Checkout complete! Your order has been placed."
     else
+      Rails.logger.debug "Order errors: #{@order.errors.full_messages.join(', ')}"
       flash[:alert] = "There was an issue processing your order."
       render :index
     end
   end
-
 
   private
 
@@ -88,11 +67,9 @@ class CheckoutsController < ApplicationController
   end
 
   def calculate_totals
-    # Calculate subtotal
     @subtotal = @cart_items.sum { |item| item[:product].price * item[:quantity] }
-
-    # Apply taxes based on province
     @province = @user.address&.province || Province.find_by(id: address_params[:province_id])
+
     if @province
       @gst = @subtotal * @province.gst
       @pst = @subtotal * @province.pst
@@ -107,5 +84,25 @@ class CheckoutsController < ApplicationController
 
   def address_params
     params.require(:address).permit(:address_line1, :address_line2, :city, :province_id, :postal_code, :country)
+  end
+
+  def associate_or_build_address(order)
+    if @user.address
+      order.address = @user.address
+      Rails.logger.debug "Order associated with existing address: #{order.address.attributes}"
+    else
+      order.build_address(address_params)
+      Rails.logger.debug "Order has new address: #{order.address.attributes}"
+    end
+  end
+
+  def build_order_items(order)
+    @cart_items.each do |item|
+      order.order_items.build(
+        product: item[:product],
+        quantity: item[:quantity],
+        price: item[:product].price
+      )
+    end
   end
 end
