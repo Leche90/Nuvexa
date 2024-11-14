@@ -107,17 +107,17 @@
 
 
 Province.create([
-  { name: "Alberta", code: "AB" },
-  { name: "British Columbia", code: "BC" },
-  { name: "Manitoba", code: "MB" },
-  { name: "New Brunswick", code: "NB" },
-  { name: "Newfoundland and Labrador", code: "NL" },
-  { name: "Northwest Territories", code: "NT" },
-  { name: "Nova Scotia", code: "NS" },
-  { name: "Nunavut", code: "NU" },
-  { name: "Ontario", code: "ON" },
-  { name: "Prince Edward Island", code: "PE" },
-  { name: "Quebec", code: "QC" },
-  { name: "Saskatchewan", code: "SK" },
-  { name: "Yukon", code: "YT" }
+  { name: "Alberta", code: "AB", pst: 0.0, gst: 0.05, hst: 0.0 },
+  { name: "British Columbia", code: "BC", pst: 0.07, gst: 0.05, hst: 0.0 },
+  { name: "Manitoba", code: "MB", pst: 0.07, gst: 0.05, hst: 0.0 },
+  { name: "New Brunswick", code: "NB", pst: 0.0, gst: 0.0, hst: 0.15 },
+  { name: "Newfoundland and Labrador", code: "NL", pst: 0.0, gst: 0.0, hst: 0.15 },
+  { name: "Northwest Territories", code: "NT", pst: 0.0, gst: 0.05, hst: 0.0 },
+  { name: "Nova Scotia", code: "NS", pst: 0.0, gst: 0.0, hst: 0.15 },
+  { name: "Nunavut", code: "NU", pst: 0.0, gst: 0.05, hst: 0.0 },
+  { name: "Ontario", code: "ON", pst: 0.0, gst: 0.0, hst: 0.13 },
+  { name: "Prince Edward Island", code: "PE", pst: 0.0, gst: 0.0, hst: 0.15 },
+  { name: "Quebec", code: "QC", pst: 0.09975, gst: 0.05, hst: 0.0 },
+  { name: "Saskatchewan", code: "SK", pst: 0.06, gst: 0.05, hst: 0.0 },
+  { name: "Yukon", code: "YT", pst: 0.0, gst: 0.05, hst: 0.0 }
 ])
