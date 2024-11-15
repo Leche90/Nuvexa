@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def index
     # Fetch all orders for the current user
-    @orders = current_frontend_user.orders.includes(:order_items, :address)
+    @orders = current_frontend_user.orders.includes(:order_items, :address).order(created_at: :desc)
   end
 
   def create

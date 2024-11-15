@@ -41,7 +41,7 @@ class CheckoutsController < ApplicationController
 
     # Manually assign totals and address to the order
     @order = @user.orders.build(total_price: @total_price, total_tax: @total_tax,
-    gst: @gst, pst: @pst, hst: @hst)
+    gst: @gst, pst: @pst, hst: @hst, total_amount: @subtotal)
 
     associate_or_build_address(@order)
     build_order_items(@order)
