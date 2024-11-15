@@ -31,6 +31,7 @@
               <%= current_frontend_user.email %>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <%= link_to 'My orders', orders_path, class: 'dropdown-item' %>
               <% if current_frontend_user.address.nil? %>
                 <%= link_to 'Add Address', new_user_address_path(current_frontend_user), class: 'dropdown-item' %>
               <% else %>

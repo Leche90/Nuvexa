@@ -5,10 +5,19 @@ class OrdersController < ApplicationController
   def new
   end
 
+  def index
+    # Fetch all orders for the current user
+    @orders = current_frontend_user.orders.includes(:order_items, :address)
+  end
+
   def create
   end
 
   def show
+    @order = current_frontend_user.orders.includes(:order_items, :address).find(params[:id])
+    Rails.logger.debug "Order after address association: #{@order.attributes}"
+     Rails.logger.debug "Order details: #{@order.inspect}"
+  Rails.logger.debug "Order address: #{@order.address.inspect}"
   end
 
   private

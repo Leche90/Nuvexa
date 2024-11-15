@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   root "home#index"
   resources :products, only: [ :index, :show ]
   resources :categories, only: [ :index, :show ]
-  resources :orders, only: [ :new, :create, :show ]
+  resources :orders, only: [ :index, :new, :create, :show ]
   resources :cart, only: [ :index ] do
     post "add", on: :collection  # This creates the `add_cart_index_path`
     patch "update_quantity", on: :collection
