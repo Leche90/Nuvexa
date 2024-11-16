@@ -15,11 +15,15 @@ Rails.application.routes.draw do
 
   # Admin routes
   namespace :admin do
+    get "provinces/index"
+    get "provinces/edit"
+    get "provinces/update"
     root "dashboard#index"
     resources :products, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :orders, only: [ :index, :show, :edit, :update ]
     resources :users, only: [ :index ]
     resources :categories
+    resources :provinces, only: [ :index, :edit, :update ]
   end
 
   # Frontend routes
