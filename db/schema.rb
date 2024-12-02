@@ -137,15 +137,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_190656) do
     t.decimal "hst", precision: 5, scale: 4, default: "0.0"
   end
 
-  create_table "static_pages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "username"
+    t.string "password_digest"
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -153,7 +148,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_190656) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "role", default: "customer"
     t.bigint "province_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["province_id"], name: "index_users_on_province_id"
@@ -172,4 +166,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_190656) do
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "product_pricing_histories", "products"
+  add_foreign_key "users", "provinces"
 end
